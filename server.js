@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 // Port
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3003;
 
 // DB Connection
 require("./config/db.connection")
@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended: true}))
 // Routes
 app.use("/videos", routes.videos);
 app.get("/", (req, res) => {
-    res.send("Hello page"); 
+    res.send("Hello"); 
 })
 
 // Listen
