@@ -5,6 +5,19 @@ const app = express();
 // Port
 const PORT = process.env.PORT || 3003;
 
+// Import Cors
+const cors = require("cors");
+const whitelist = ["http://localhost:3003"]
+const corsOptions = {
+    origin: function (origin, callback) {
+        if(whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    }
+}
+
 // DB Connection
 require("./config/db.connection")
 
@@ -12,6 +25,7 @@ require("./config/db.connection")
 const routes = require("./routes")
 
 // middleware
+app.use(cors()) // add corsOption to whitelist ports
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
