@@ -24,7 +24,7 @@ const videoSchema = new mongoose.Schema({
     },
     videoLink: {
         type: String,
-        default: "https://youtu.be/NLPuCclm5lA",
+        default: "https://www.youtube.com/embed/Ygu14YkQvUs",
     }
 })
 
