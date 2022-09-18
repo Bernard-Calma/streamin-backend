@@ -1,3 +1,3 @@
 module.exports = {
-    Videos: require("./videos")
+    videos: require("./videos")
 }
