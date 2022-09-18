@@ -21,6 +21,10 @@ const videoSchema = new mongoose.Schema({
     publishedDate: {
         type: Date,
         default: Date.now,
+    },
+    videoLink: {
+        type: String,
+        default: "https://youtu.be/NLPuCclm5lA",
     }
 })
 
