@@ -7,8 +7,7 @@ const videoSchema = new mongoose.Schema({
     },
     user: { // will need to be attached to logged in user
         type: String,
-        required: true,
-        unique: true,
+        default: "Guest",
     },
     description: String,
     likes: {
