@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+
+// use /videos/:id - show
+// /videos - index
+// /videos - create
 const videoSchema = new mongoose.Schema({
     name: { 
         type: String,
@@ -14,6 +18,9 @@ const videoSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    // to call comments start from video
+    // retrieve ID from each comment
+    // use /comments/:id to get into index route
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
