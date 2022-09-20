@@ -2,6 +2,7 @@ const db = require("../models")
 
 // ROUTES
 const index = (req, res) => {
+    
     db.videos.find({}, (err, video) => {
         if(err) return res.status(404).json({error: err.message})
         return res.status(200).json({
@@ -22,7 +23,9 @@ const create = (req, res) => {
 // SHOW
 
 const show = (req, res) => {
-    db.videos.findById({_id: req.params.id}, (err, video) => {
+    // console.log(req.params.id)
+    db.videos.findById(req.params.id, (err, video) => {
+        // console.log(video)
         if(err) return res.status(404).json({error: err.message})
         return res.status(200).json(video) 
     })
