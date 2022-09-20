@@ -10,6 +10,8 @@ const index = (req, res) => {
     })
 }
 
+
+// CREATE
 const create = (req, res) => {
     db.videos.create(req.body, (err, video) => {
         if(err) return res.status(404).json({error: err.message})
@@ -17,7 +19,17 @@ const create = (req, res) => {
     })
 }
 
+// SHOW
+
+const show = (req, res) => {
+    db.videos.findById({_id: req.params.id}, (err, video) => {
+        if(err) return res.status(404).json({error: err.message})
+        return res.status(200).json(video) 
+    })
+}
+
 module.exports ={
     index,
     create,
+    show,
 }

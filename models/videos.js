@@ -15,8 +15,8 @@ const videoSchema = new mongoose.Schema({
         default: 0,
     },
     comments: [{
-        body: String,
-        commentDate: Date
+        type: String,
+        ref: "Comment",
     }],
     publishedDate: {
         type: Date,
@@ -25,6 +25,7 @@ const videoSchema = new mongoose.Schema({
     videoLink: {
         type: String,
         default: "https://www.youtube.com/embed/Ygu14YkQvUs",
+        required: true,
     }
 })
 
