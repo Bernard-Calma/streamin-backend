@@ -1,24 +1,24 @@
 const mongoose = require("mongoose");
-const Video = require("./videos");
 
 const commentSchema = new mongoose.Schema({
     content: {
         type:String,
         required: true,
     },
-    userID: {
-        type:String,
+    userID: { // tied up to userID that creted the comment
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true,
-        default: "User_Test" //need to reference to user model when created
     },
-    videoID: {
+    videoID: { // tied up to videoID where the comment is created
         type: mongoose.Schema.Types.ObjectId,
         ref: "Video",
+        required: true,
     },
-    likes: {
-        type: Number,
-        default: 0,
-    }
+    likes: [{ //related to user schema to be able get array length to count number of likes
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    }]
 })
 
 const Comment = mongoose.model("Comment", commentSchema);
