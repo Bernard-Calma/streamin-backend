@@ -19,9 +19,18 @@ const videoSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:"User",
         }],
-    comments: [{ //related to user schema to be able get array of comments that has this videoID
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
+    comments: [{ // Comment Object
+        type: String,
+        user: { // each index needs a userID
+            type: String,
+            required: true,
+        },
+        likes: {String}, // likes is an array of strings of userIDs
+        date: Date,
+        comment: { // Comments' content
+            type: String,
+            required: true,
+        },
     },],
     publishedDate: {
         type: Date,
