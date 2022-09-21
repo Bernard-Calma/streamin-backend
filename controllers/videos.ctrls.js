@@ -31,8 +31,31 @@ const show = (req, res) => {
     })
 }
 
+const update = (req, res) => {
+    db.videos.findByIdAndUpdate(req.params.id,
+        {
+            $set: req.body,
+        },
+        {
+            new: true,
+        },
+        (err, updatedVideo) => {
+            if(err) return res.status(400).json({error: err.message})
+            return res.status(200).json(updatedVideo)
+        })
+}
+
+const destroy = (req, res) => {
+    db.videos.findByIdAndDelete(req.params.id, (err, deletedVideo) => {
+        if(err) return res.status(400).json({error: err.message})
+        return res.status(200).json(deletedVideo)
+    })
+}
+
+
 module.exports ={
     index,
     create,
     show,
+    update,
 }
