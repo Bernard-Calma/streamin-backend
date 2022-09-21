@@ -1,6 +1,9 @@
 const db = require("../models")
 
+// ROUTES
+
 // CREATE
+// post - /users
 const create = (req, res) => {
     db.users.create(req.body, (err, user) => {
         if(err) return res.status(404).json({error: err.message})
@@ -9,6 +12,7 @@ const create = (req, res) => {
 }
 
 // SHOW
+// put - /users/:id
 const show = (req, res) => {
     db.users.findById(req.params.id, (err, user) => {
         if(err) return res.status(404).json({error: err.message})
@@ -17,6 +21,7 @@ const show = (req, res) => {
 }
 
 // EDIT
+// post - /users/:id
 const edit = (req, res) => {
     db.users.findByIdAndUpdate(req.params.id,
         {
