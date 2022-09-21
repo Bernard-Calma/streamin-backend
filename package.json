@@ -20,7 +20,9 @@
   "homepage": "https://github.com/Bernard-Calma/streamin-backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
     "express": "^4.18.1",
+    "express-session": "^1.17.3",
     "mongoose": "^6.6.1"
   }
 }

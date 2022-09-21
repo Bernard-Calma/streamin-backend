@@ -1,7 +1,8 @@
 // Express
 const express = require("express");
+const session = require("express-session")
 const app = express();
-
+require("dotenv").config();
 // Port
 const PORT = process.env.PORT || 3003;
 

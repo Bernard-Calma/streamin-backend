@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const mongodbURL = process.env.MONGODB_URI || "mongodb://localhost:27017/streaminDB";
-
+console.log(mongodbURL);
 // set up connection with the DB
 mongoose.connect(mongodbURL);
 
