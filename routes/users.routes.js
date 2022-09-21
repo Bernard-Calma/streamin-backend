@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const ctrls = require("../controllers")
 
-router.get("/:id", ctrls.comments.index)
+router.post("/", ctrls.users.create)
+router.get("/:id", ctrls.users.show)
+router.put("/:id",ctrls.users.edit)
 
 module.exports = router;

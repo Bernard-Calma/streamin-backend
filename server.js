@@ -31,7 +31,7 @@ app.use(express.urlencoded({extended: true}))
 
 // Routes
 app.use("/videos", routes.videos);
-app.use("/comments", routes.comments);
+app.use("/users",routes.users);
 app.get("/", (req, res) => {
     res.send("Hello"); 
 })

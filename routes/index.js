@@ -1,4 +1,4 @@
 module.exports = {
     videos: require("./videos.routes"),
-    comments: require("./comments.routes")
+    users: require("./users.routes"),
 }
