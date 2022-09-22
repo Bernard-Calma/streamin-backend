@@ -53,11 +53,29 @@ const edit = (req, res) => {
         )
 }
 
+// LOGIN
+// get - /user/:username
+// This will return the data of a user
+// Passing a parameter of username at login
+// If found it will return the data and compare password
+// If true it will return the date
+// If false it will return an error
+const login = (req, res) => {
+    db.users.findOne({username: req.body.username.toLowerCase()}, (err, userFound) => {
+        if(err) return res.status(400).json({error: err.message});
+        //unhash password
+        // if false
+        if(!bcrypt.compareSync(req.body.password, userFound.password)) return res.status(400).json({error: err.message});
+        return res.status(200).json(userFound);
+    })
+}
+
 module.exports = {
    
     create,
     show,
     edit,
     index,
+    login,
 
 }
