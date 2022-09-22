@@ -33,16 +33,17 @@ app.use(session({
     saveUninitialized: false,
 }))
 
-app.use("/videos",(req, res, next) => {
-    res.locals.currentUser = req.session.currentUser
-    if (req.session.currentUser) {
-        res.locals.authenticated = true;
-        next();
-    } else {
-        console.log("session failed, need to login")
+// Unable to make session work need to research more
+// app.use("/videos",(req, res, next) => {
+//     res.locals.currentUser = req.session.currentUser
+//     if (req.session.currentUser) {
+//         res.locals.authenticated = true;
+//         next();
+//     } else {
+//         console.log("session failed, need to login")
 
-    }
-})
+//     }
+// })
 
 // middleware
 app.use(cors()) // add corsOption to whitelist ports
