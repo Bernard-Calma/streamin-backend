@@ -1,10 +1,24 @@
 const db = require("../models")
+const bcrypt = require("bcrypt");
 
 // ROUTES
+
+// Index
+// get - /users
+// added for future use if app needs to grab all user collection data
+const index = (req, res) => {
+    db.users.find({}, (err, foundUsers) => {
+        if(err) return res.status(404).json({error: err.message})
+        return res.status(200).json(foundUsers) 
+    })
+}
 
 // CREATE
 // post - /users
 const create = (req, res) => {
+    const salt = bcrypt.genSaltSync(10);
+    req.body.username = req.body.username.toLowerCase();
+    req.body.password = bcrypt.hashSync(req.body.password, salt)
     db.users.create(req.body, (err, user) => {
         if(err) return res.status(404).json({error: err.message})
         return res.status(200).json(user)
@@ -13,6 +27,8 @@ const create = (req, res) => {
 
 // SHOW
 // put - /users/:id
+// bcrypt needs to be installed in the front end to compare hashed password
+// !bcrypt.compareSync(req.body.password, user.password)
 const show = (req, res) => {
     db.users.findById(req.params.id, (err, user) => {
         if(err) return res.status(404).json({error: err.message})
@@ -42,5 +58,6 @@ module.exports = {
     create,
     show,
     edit,
+    index,
 
 }
