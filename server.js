@@ -1,7 +1,8 @@
 // Express
 const express = require("express");
+const session = require("express-session")
 const app = express();
-
+require("dotenv").config();
 // Port
 const PORT = process.env.PORT || 3003;
 
@@ -23,6 +24,25 @@ require("./config/db.connection")
 
 // Internal Modules
 const routes = require("./routes")
+
+// Sessions
+const SESSION_SECRET = process.env.SESSION_SECRET
+app.use(session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}))
+
+app.use("/videos",(req, res, next) => {
+    res.locals.currentUser = req.session.currentUser
+    if (req.session.currentUser) {
+        res.locals.authenticated = true;
+        next();
+    } else {
+        console.log("session failed, need to login")
+
+    }
+})
 
 // middleware
 app.use(cors()) // add corsOption to whitelist ports
