@@ -13,6 +13,24 @@ const index = (req, res) => {
     })
 }
 
+// get videos and filter by user id
+// get - /videos/:userid
+const userVideos = (req, res) => {
+    console.log("Body", req.body)
+    try {
+        db.videos.find({user: req.params.userid}, (err, videos) => {
+            // console.log("Video ", video)
+            if(err) return res.status(404).json({error: err.message})
+            return res.status(200).json({
+                videos,
+            })
+        })
+    } catch (err) {
+        return res.status(404).json({error: err.message})
+    }
+
+}
+
 
 // CREATE
 // post - /videos
@@ -65,4 +83,5 @@ module.exports ={
     show,
     edit,
     destroy,
+    userVideos,
 }

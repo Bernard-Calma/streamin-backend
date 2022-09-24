@@ -7,4 +7,5 @@ router.post("/", ctrls.videos.create)
 router.put("/:id", ctrls.videos.edit)
 router.get("/:id", ctrls.videos.show)
 router.delete("/:id", ctrls.videos.destroy)
+router.get("/uservideos/:userid",ctrls.videos.userVideos)
 module.exports = router;
