@@ -1,5 +1,6 @@
 const db = require("../models")
 const bcrypt = require("bcrypt");
+const session = require("express-session")
 
 // ROUTES
 
@@ -8,8 +9,13 @@ const bcrypt = require("bcrypt");
 // added for future use if app needs to grab all user collection data
 const index = (req, res) => {
     db.users.find({}, (err, foundUsers) => {
-        if(err) return res.status(404).json({error: err.message})
-        return res.status(200).json(foundUsers) 
+        try {
+            if(err) return res.status(404).json({error: err.message})
+            return res.status(200).json(foundUsers) 
+        } catch {
+            return res.status(200).json(foundUsers) 
+        }
+
     })
 }
 
@@ -20,8 +26,13 @@ const create = (req, res) => {
     req.body.username = req.body.username.toLowerCase();
     req.body.password = bcrypt.hashSync(req.body.password, salt)
     db.users.create(req.body, (err, user) => {
-        if(err) return res.status(404).json({error: err.message})
-        return res.status(200).json(user)
+        try {
+            if(err) return res.status(404).json({error: err.message})
+            return res.status(200).json(user)
+        } catch (err) {
+            return res.status(200).json(user)
+        }
+        
     })
 }
 
@@ -31,8 +42,13 @@ const create = (req, res) => {
 // !bcrypt.compareSync(req.body.password, user.password)
 const show = (req, res) => {
     db.users.findById(req.params.id, (err, user) => {
-        if(err) return res.status(404).json({error: err.message})
-        return res.status(200).json(user) 
+        try {
+            if(err) return res.status(404).json({error: err.message})
+            return res.status(200).json(user) 
+        } catch (err) {
+            return res.status(200).json(user) 
+        }
+        
     })
 }
 
@@ -47,8 +63,13 @@ const edit = (req, res) => {
             new: true,
         },
         (err, updatedUser) => {
-            if(err) return res.status(400).json({error: err.message})
-            return res.status(200).json(updatedUser)
+            try {
+                if(err) return res.status(400).json({error: err.message})
+                return res.status(200).json(updatedUser)
+            } catch (err) {
+                return res.status(200).json(updatedUser)
+            }
+
         }
         )
 }
@@ -61,13 +82,22 @@ const edit = (req, res) => {
 // If true it will return the date
 // If false it will return an error
 const login = (req, res) => {
-    console.log(req.params)
-    db.users.findOne({username: req.params.username.toLowerCase()}, (err, userFound) => {
-        if(err) return res.status(400).json({error: err.message});
-        //unhash password
-        // if false
-        if(!bcrypt.compareSync(req.params.password, userFound.password)) return res.status(400).json({error: err.message});
-        return res.status(200).json(userFound);
+    db.users.findOne({username: req.params.username.toLowerCase()}, (err, userFound) => {  
+        try {
+            if(err) return res.status(400).json({error: err.message});
+            //unhash password
+            // if false
+            if(!bcrypt.compareSync(req.params.password, userFound.password)) {
+                return res.status(400).json({error: err.message});
+            } else {
+                req.session.currentUser = userFound;
+                // console.log("Client Side Return: " , req.session)
+                return res.status(200).json(userFound);
+            }
+        } catch (err) {
+            return res.status(400).json({error: err.message});
+        }
+
     })
 }
 
