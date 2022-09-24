@@ -22,6 +22,7 @@ const index = (req, res) => {
 // CREATE
 // post - /users
 const create = (req, res) => {
+    // console.log(req.body)
     const salt = bcrypt.genSaltSync(10);
     req.body.username = req.body.username.toLowerCase();
     req.body.password = bcrypt.hashSync(req.body.password, salt)
@@ -30,7 +31,7 @@ const create = (req, res) => {
             if(err) return res.status(404).json({error: err.message})
             return res.status(200).json(user)
         } catch (err) {
-            return res.status(200).json(user)
+            return res.status(404).json({error: err.message})
         }
         
     })

@@ -4,6 +4,7 @@ const userSchema = mongoose.Schema({
     username: {
         type: String,
         required: true,
+        unique: true,
     },
     password: {
         type: String,
@@ -12,6 +13,7 @@ const userSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
+        unique: true,
     },
     //all comments that are created by this ID will show in this array
     comments: [{
