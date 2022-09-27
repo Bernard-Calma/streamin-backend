@@ -26,12 +26,12 @@ require("./config/db.connection")
 const routes = require("./routes")
 
 // Sessions
-const SESSION_SECRET = process.env.SESSION_SECRET
-app.use(session({
-    secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-}))
+// const SESSION_SECRET = process.env.SESSION_SECRET
+// app.use(session({
+//     secret: SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+// }))
 
 // Unable to make session work need to research more
 // app.use("/videos",(req, res, next) => {

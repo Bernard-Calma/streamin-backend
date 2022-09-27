@@ -84,20 +84,18 @@ const edit = (req, res) => {
 // If false it will return an error
 const login = (req, res) => {
     db.users.findOne({username: req.params.username.toLowerCase()}, (err, userFound) => {  
-        try {
-            if(err) return res.status(400).json({error: err.message});
+        console.log("err", err) 
+        console.log("user found", userFound) 
+        if(err) return res.status(400).json({error: err.message});
             //unhash password
             // if false
             if(!bcrypt.compareSync(req.params.password, userFound.password)) {
                 return res.status(400).json({error: err.message});
             } else {
-                req.session.currentUser = userFound;
+                // req.session.currentUser = userFound;
                 // console.log("Client Side Return: " , req.session)
                 return res.status(200).json(userFound);
             }
-        } catch (err) {
-            return res.status(400).json({error: err.message});
-        }
 
     })
 }
