@@ -15,7 +15,6 @@ app.use((req,res,next) => {
     res.header("Access-Control-Allow-Credentials", true)
     next();
 })
-
 const whitelist = ["http://localhost:3003", process.env.FRONTEND_URL]
 const corsOptions = {
     origin: function (origin, callback) {
