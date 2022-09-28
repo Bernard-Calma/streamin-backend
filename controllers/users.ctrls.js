@@ -84,8 +84,8 @@ const edit = (req, res) => {
 // If false it will return an error
 const login = (req, res) => {
     db.users.findOne({username: req.params.username.toLowerCase()}, (err, userFound) => {  
-        console.log("err", err) 
-        console.log("user found", userFound) 
+        // console.log("err", err) 
+        // console.log("user found", userFound) 
         if(err) return res.status(400).json({error: err.message});
             //unhash password
             // if false
