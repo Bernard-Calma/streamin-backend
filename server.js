@@ -8,17 +8,18 @@ const PORT = process.env.PORT || 3003;
 
 // Import Cors
 const cors = require("cors");
-app.use((req,res,next) => {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE")
-    res.header("Access-Control-Allow-Headers", "application/json")
-    res.header("Access-Control-Allow-Credentials", true)
-    next();
-})
-const whitelist = ["http://localhost:3003", process.env.FRONTEND_URL]
+// app.use((req,res,next) => {
+//     res.header('Access-Control-Allow-Origin', "*");
+//     res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE")
+//     res.header("Access-Control-Allow-Headers", "application/json")
+//     res.header("Access-Control-Allow-Credentials", true)
+//     next();
+// })
+const whitelist = ["http://localhost:3000",`${process.env.FRONTEND_URL}`, `${BACKEND_URL}`]
 const corsOptions = {
     origin: function (origin, callback) {
-        if(whitelist.indexOf(origin) !== -1) {
+        console.log("test")
+        if(whitelist.indexOf(origin) !== -1 || !origin) {
             callback(null, true)
         } else {
             callback(new Error("Not allowed by CORS"))
