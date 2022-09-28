@@ -17,8 +17,7 @@ const cors = require("cors");
 // })
 const whitelist = ["http://localhost:3000",`${process.env.FRONTEND_URL}`, `${process.env.BACKEND_URL}`]
 const corsOptions = {
-    origin: function (origin, callback) {
-        console.log("test")
+    origin: (origin, callback) => {
         if(whitelist.indexOf(origin) !== -1 || !origin) {
             callback(null, true)
         } else {
