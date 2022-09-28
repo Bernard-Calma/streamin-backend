@@ -8,6 +8,13 @@ const PORT = process.env.PORT || 3003;
 
 // Import Cors
 const cors = require("cors");
+app.use((req,res,next) => {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE")
+    res.header("Access-Control-Allow-Headers", "application/json")
+    res.header("Access-Control-Allow-Credentials", true)
+    next();
+})
 
 const whitelist = ["http://localhost:3003", process.env.FRONTEND_URL]
 const corsOptions = {
