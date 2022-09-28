@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3003;
 
 // Import Cors
 const cors = require("cors");
-const whitelist = ["http://localhost:3003"]
+const whitelist = ["http://localhost:3003", process.env.MONGODB_URI]
 const corsOptions = {
     origin: function (origin, callback) {
         if(whitelist.indexOf(origin) !== -1) {
@@ -46,7 +46,7 @@ const routes = require("./routes")
 // })
 
 // middleware
-app.use(cors()) // add corsOption to whitelist ports
+app.use(cors(corsOptions)) // add corsOption to whitelist ports
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
