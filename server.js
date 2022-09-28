@@ -15,7 +15,7 @@ const cors = require("cors");
 //     res.header("Access-Control-Allow-Credentials", true)
 //     next();
 // })
-const whitelist = ["http://localhost:3000",`${process.env.FRONTEND_URL}`, `${BACKEND_URL}`]
+const whitelist = ["http://localhost:3000",`${process.env.FRONTEND_URL}`, `${process.env.BACKEND_URL}`]
 const corsOptions = {
     origin: function (origin, callback) {
         console.log("test")
