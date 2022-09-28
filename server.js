@@ -15,10 +15,9 @@ const cors = require("cors");
 //     res.header("Access-Control-Allow-Credentials", true)
 //     next();
 // })
-const whitelist = ["http://localhost:3000",`https://stream-in.herokuapp.com`]
+const whitelist = ["http://localhost:3000","https://stream-in.herokuapp.com"]
 const corsOptions = {
     origin: (origin, callback) => {
-        console.log(origin)
         if(whitelist.indexOf(origin) !== -1 || !origin) {
             callback(null, true)
         } else {
