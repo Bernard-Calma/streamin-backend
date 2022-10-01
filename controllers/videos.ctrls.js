@@ -19,7 +19,7 @@ const userVideos = (req, res) => {
     // console.log("Body", req.body)
     try {
         db.videos.find({user: req.params.userid}, (err, videos) => {
-            // console.log("Video ", video)
+            // console.log("Video ", videos)
             if(err) return res.status(404).json({error: err.message})
             return res.status(200).json(videos)
         })
@@ -34,6 +34,7 @@ const userVideos = (req, res) => {
 // post - /videos
 const create = (req, res) => {
     // console.log(req.body.videoLink)
+    req.body.title = req.body.title.toLowerCase();
     let postfix = ""
     if(req.body.videoLink){
         // YouTube
@@ -91,6 +92,17 @@ const edit = (req, res) => {
         })
 }
 
+// INDEX
+// Find Many
+const search = (req, res) => {
+    console.log("Search" , req.params.keyword)
+    db.videos.find({title: {$regex: req.params.keyword, $options: "si"}}, (err, findVideos) => {
+        console.log(findVideos)
+        if(err) return res.status(400).json({error: err.message})
+        return res.status(200).json(findVideos)
+    })
+}
+
 // SHOW
 // get - /videos/:id
 const show = (req, res) => {
@@ -118,4 +130,5 @@ module.exports ={
     edit,
     destroy,
     userVideos,
+    search,
 }
