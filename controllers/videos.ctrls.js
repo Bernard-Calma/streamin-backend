@@ -34,7 +34,6 @@ const userVideos = (req, res) => {
 // post - /videos
 const create = (req, res) => {
     // console.log(req.body.videoLink)
-    req.body.title = req.body.title.toLowerCase();
     let postfix = ""
     if(req.body.videoLink){
         // YouTube
