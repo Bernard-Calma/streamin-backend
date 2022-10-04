@@ -20,7 +20,6 @@ const videoSchema = new mongoose.Schema({
         ref:"User",
         }],
     comments: [{ // Comment Object
-        type: String,
         user: { // each index needs a userID
             type: String,
             required: true,
