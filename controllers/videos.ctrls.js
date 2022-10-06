@@ -88,7 +88,7 @@ const edit = (req, res) => {
             new: true,
         },
         (err, updatedVideo) => {
-            console.log(updatedVideo)
+            // console.log(err)
             if(err) return res.status(400).json({error: err.message})
             return res.status(200).json(updatedVideo)
             
