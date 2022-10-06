@@ -78,8 +78,8 @@ const create = (req, res) => {
 // EDIT
 // put - /videos/:id
 const edit = (req, res) => {
-    // console.log("req.body : ", req.body);
-    // console.log("params : ", req.params.id);
+    console.log("req.body : ", req.body);
+    console.log("params : ", req.params.id);
     db.videos.findByIdAndUpdate(req.params.id,
         {
             $set: req.body,
