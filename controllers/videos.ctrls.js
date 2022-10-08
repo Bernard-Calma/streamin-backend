@@ -61,7 +61,7 @@ const create = (req, res) => {
             user = req.body.videoLink.slice(req.body.videoLink.indexOf('.com/') + 5, req.body.videoLink.indexOf('/', req.body.videoLink.indexOf('.com/') + 6))
             // console.log(req.body.videoLink.slice(req.body.videoLink.lastIndexOf('/') + 1))
             postfix = req.body.videoLink.slice(req.body.videoLink.lastIndexOf('/') + 1)
-            req.body.videoLink = `https://www.facebook.com/plugins/video.php?height=401&href=https%3A%2F%2Fwww.facebook.com%2F${user}%2Fvideos%2F${postfix}%2F&show_text=false&width=560&t=0`
+            req.body.videoLink = `https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2F${user}%2Fvideos%2F${postfix}%2F&show_text=false&t=0`
         } else if (req.body.videoLink.includes("dailymotion")){
             postfix = req.body.videoLink.slice(req.body.videoLink.lastIndexOf('/') + 1, req.body.videoLink.lastIndexOf('/') + 8);
             // console.log(postfix)
