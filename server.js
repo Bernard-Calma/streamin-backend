@@ -63,7 +63,7 @@ app.use(express.urlencoded({extended: true}))
 app.use("/videos", routes.videos);
 app.use("/users",routes.users);
 app.get("/", (req, res) => {
-    res.redirect("stream-in.herokuapp.com"); 
+    res.redirect("https://stream-in.herokuapp.com"); 
 })
 
 // Listen
