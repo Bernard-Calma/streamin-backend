@@ -55,7 +55,7 @@ const routes = require("./routes")
 
 
 // middleware
-app.use(cors(corsOptions)) // add corsOption to whitelist ports
+// app.use(cors(corsOptions)) // add corsOption to whitelist ports
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
