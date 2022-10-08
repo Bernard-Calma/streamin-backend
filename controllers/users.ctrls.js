@@ -91,7 +91,7 @@ const login = (req, res) => {
             // if false
         if(userFound !== null){
             if(!bcrypt.compareSync(req.params.password, userFound.password)) {
-                return res.status(400).json({error: err.message});
+                // return res.status(400).json({error: err.message});
             } else {
                 // req.session.currentUser = userFound;
                 // console.log("Client Side Return: " , req.session)
