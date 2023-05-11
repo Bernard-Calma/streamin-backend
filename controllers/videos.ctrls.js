@@ -4,12 +4,21 @@ const db = require("../models")
 
 // INDEX
 // get - /videos
-const index = (req, res) => {
-    db.videos.find({}, (err, video) => {
-        if(err) return res.status(404).json({error: err.message})
-        return res.status(200).json({
-            video,
-        })
+const index = (_, res) => {
+    // console.log("Video List Route Called.")
+    db.videos.find({}, (err, videoList) => {
+        // console.log(videoList)
+        try {
+            if(err) {
+                // console.log(err)
+                return res.status(404).json({error: err.message})
+            }
+            return res.status(200).json(videoList)
+        }
+        catch {
+            return res.status(200).json(videoList)
+        }
+        
     })
 }
 

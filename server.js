@@ -4,18 +4,11 @@ const session = require("express-session")
 const app = express();
 require("dotenv").config();
 // Port
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 8000;
 
 // Import Cors
 const cors = require("cors");
-// app.use((req,res,next) => {
-//     res.header('Access-Control-Allow-Origin', "*");
-//     res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE")
-//     res.header("Access-Control-Allow-Headers", "application/json")
-//     res.header("Access-Control-Allow-Credentials", true)
-//     next();
-// })
-const whitelist = ["http://localhost:3000",process.env.FRONTEND_URL]
+const whitelist = ["http://localhost:3000/",process.env.FRONTEND_URL]
 const corsOptions = {
     origin: (origin, callback) => {
         if(whitelist.indexOf(origin) !== -1 || !origin) {
@@ -23,8 +16,10 @@ const corsOptions = {
         } else {
             callback(new Error("Not allowed by CORS"))
         }
-    }
+    },
+    credentials: true
 }
+app.use(cors(corsOptions)) // add corsOption to whitelist ports
 
 // DB Connection
 require("./config/db.connection")
@@ -33,12 +28,12 @@ require("./config/db.connection")
 const routes = require("./routes")
 
 // Sessions
-// const SESSION_SECRET = process.env.SESSION_SECRET
-// app.use(session({
-//     secret: SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-// }))
+const SESSION_SECRET = process.env.SESSION_SECRET
+app.use(session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}))
 
 // Unable to make session work need to research more
 // app.use("/videos",(req, res, next) => {
@@ -55,14 +50,13 @@ const routes = require("./routes")
 
 
 // middleware
-app.use(cors()) // add corsOption to whitelist ports
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 // Routes
 app.use("/videos", routes.videos);
 app.use("/users",routes.users);
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
     res.send("Backend"); 
 })
 
