@@ -10,11 +10,6 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    name: {
-        type: String,
-        required: true,
-        unique: true,
-    },
     //all comments that are created by this ID will show in this array
     comments: [{
         type: mongoose.Schema.Types.ObjectId,

@@ -24,7 +24,10 @@ const videoSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        likes: [String], // likes is an array of strings of userIDs
+        likes: {
+            type: Array,
+            default: []
+        }, // likes is an array of strings of userIDs
         date: Date,
         comment: { // Comments' content
             type: String,

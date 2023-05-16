@@ -7,8 +7,8 @@ const session = require("express-session")
 // Index
 // get - /users
 // added for future use if app needs to grab all user collection data
-const index = (req, res) => {
-    db.users.find({}, (err, foundUsers) => {
+const index = async (req, res) => {
+    await db.users.find({}, (err, foundUsers) => {
         try {
             if(err) return res.status(404).json({error: err.message})
             return res.status(200).json(foundUsers) 
@@ -26,14 +26,18 @@ const create = (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     req.body.username = req.body.username.toLowerCase();
     req.body.password = bcrypt.hashSync(req.body.password, salt)
+    delete req.body.passwordCheck
+    // console.log(req.body)
     db.users.create(req.body, (err, user) => {
         try {
-            if(err) return res.status(404).json({error: err.message})
+            if(err) {
+                console.log(err)
+                return res.status(400).json({err:"Username already been taken"});
+            }
             return res.status(200).json(user)
         } catch (err) {
             return res.status(404).json({error: err.message})
         }
-        
     })
 }
 
@@ -47,7 +51,7 @@ const show = (req, res) => {
             if(err) return res.status(404).json({error: err.message})
             return res.status(200).json(user) 
         } catch (err) {
-            return res.status(200).json(user) 
+            return res.status(404).json({error: err.message})
         }
         
     })
@@ -82,31 +86,30 @@ const edit = (req, res) => {
 // If found it will return the data and compare password
 // If true it will return the date
 // If false it will return an error
-const login = (req, res) => {
-    db.users.findOne({username: req.params.username.toLowerCase()}, (err, userFound) => {  
-        // console.log("err", err) 
-        // console.log("user found", userFound) 
-        if(err) return res.status(400).json({error: err.message});
-            //unhash password
-            // if false
-        if(userFound !== null){
-            if(!bcrypt.compareSync(req.params.password, userFound.password)) {
-                // return res.status(400).json({error: err.message});
-            } else {
-                // req.session.currentUser = userFound;
-                // console.log("Client Side Return: " , req.session)
-                return res.status(200).json(userFound);
-            }
+const login = async (req, res) => {
+    // console.log(req.body)
+    const user = await db.users.findOne({username: req.body.username.toLowerCase()})
+    // console.log(user)
+    if (!user) {
+        console.log("user does not exist.")
+        return res.status(404).json({err: "User does not exist"})
+    //unhash password
+    } else if (user) {
+        if (bcrypt.compareSync(req.body.password, user.password)) {
+            user.password = undefined
+            // user deleted password
+            // console.log(user)
+            res.status(200).json(user)
+        } else {
+            res.status(400).json({err: "Invalid username or password."})
         }
-    })
+    }
 }
 
 module.exports = {
-   
     create,
     show,
     edit,
     index,
     login,
-
 }

@@ -25,15 +25,15 @@ const index = (_, res) => {
 // get videos and filter by user id
 // get - /videos/:userid
 const userVideos = (req, res) => {
-    // console.log("Body", req.body)
+    // console.log("Body", req.params)
     try {
         db.videos.find({user: req.params.userid}, (err, videos) => {
             // console.log("Video ", videos)
             if(err) return res.status(404).json({error: err.message})
             return res.status(200).json(videos)
         })
-    } catch (err) {
-        return res.status(404).json({error: err.message})
+    } catch {
+        return res.status(200).json({mess: "test"})
     }
 
 }
@@ -42,7 +42,7 @@ const userVideos = (req, res) => {
 // CREATE
 // post - /videos
 const create = (req, res) => {
-    // console.log(req.body.videoLink)
+    // console.log(req.body)
     let postfix = ""
     if(req.body.videoLink){
         // YouTube
@@ -79,16 +79,25 @@ const create = (req, res) => {
         }
     }    
     db.videos.create(req.body, (err, video) => {
-        if(err) return res.status(404).json({error: err.message})
-        return res.status(200).json(video)
+        try {
+            if(err) {
+                // console.log(err)
+                return res.status(404).json({error: err.message})
+            }
+            return res.status(200).json(video)
+        }
+        catch {
+            return res.status(200).json(video)
+        }
+        
     })
 }
 
 // EDIT
 // put - /videos/:id
 const edit = (req, res) => {
-    console.log("req.body : ", req.body);
-    console.log("params : ", req.params.id);
+    // console.log("req.body : ", req.body);
+    // console.log("params : ", req.params.id);
     db.videos.findByIdAndUpdate(req.params.id,
         {
             $set: req.body,
@@ -129,9 +138,15 @@ const show = (req, res) => {
 // DESTROY
 // delete - /videos/:id
 const destroy = (req, res) => {
+    // console.log(req.params)
     db.videos.findByIdAndDelete(req.params.id, (err, deletedVideo) => {
-        if(err) return res.status(400).json({error: err.message})
-        return res.status(200).json(deletedVideo)
+        try {
+            if(err) return res.status(400).json({error: err.message})
+            return res.status(200).json(deletedVideo)
+        }
+        catch {
+            return res.status(200).json(deletedVideo)
+        }
     })
 }
 
